@@ -1,2 +1,34 @@
 ---
 # tasks file for vulcand
+
+- set_fact:
+    vulcand_basename: "vulcand-{{ vulcand_version }}-{{ vulcand_arch }}"
+- set_fact:
+    vulcand_filename: "{{ vulcand_basename }}.tar.gz"
+- set_fact:
+    vulcand_download_path: "/tmp/{{ vulcand_filename }}"
+    vulcand_install_path: "{{ vulcand_install_prefix }}/{{ vulcand_basename }}"
+
+# FIXME: Use a package.
+- name: vulcand | Download tarball
+  get_url:
+    url: "{{ vulcand_download_prefix }}/{{ vulcand_version }}/{{ vulcand_filename }}"
+    dest: "{{ vulcand_download_path }}"
+
+# FIXME: Use a package.
+- name: vulcand | Extract tarball
+  unarchive:
+    src: "{{ vulcand_download_path }}"
+    dest: "{{ vulcand_install_prefix }}/"
+    copy: no
+
+- name: vulcand | Configure upstart
+  template:
+    src: etc/init/vulcand.conf.j2
+    dest: /etc/init/vulcand.conf
+  notify: vulcand | Restart service
+
+- name: vulcand | Start service
+  service:
+    name: vulcand
+    state: started

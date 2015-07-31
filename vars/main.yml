@@ -1,2 +1,5 @@
 ---
 # vars file for vulcand
+
+vulcand_download_prefix: 'https://github.com/mailgun/vulcand/releases/download'
+vulcand_install_prefix: '/opt'
