@@ -17,6 +17,7 @@ Role Variables
 
 - `vulcand_version`: version to install, e.g. `v0.8.0-beta.3`
 - `vulcand_arch`: architecture to install, e.g. `linux-amd64`
+- `vulcand_args`: hash of CLI arguments, e.g. `{ port: 8080 }`
 
 Dependencies
 ------------
@@ -28,7 +29,11 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: vulcand }
+         - role: vulcand
+           vulcand_args:
+             etcd: http://localhost:2379
+             port: 8080
+             apiPort: 8081
 
 License
 -------

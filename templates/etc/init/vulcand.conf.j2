@@ -2,4 +2,4 @@ description "vulcand"
 
 start on runlevel [2345]
 
-exec {{ vulcand_install_path }}/vulcand
+exec {{ vulcand_install_path }}/vulcand{% for key, val in vulcand_args.iteritems() %} -{{ key }}={{ val }}{% endfor %}
