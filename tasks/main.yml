@@ -22,11 +22,11 @@
     dest: "{{ vulcand_install_prefix }}/"
     copy: no
 
-# FIXME: Notify service.
 - name: vulcand | Configure upstart
   template:
     src: etc/init/vulcand.conf.j2
     dest: /etc/init/vulcand.conf
+  notify: vulcand | Restart service
 
 - name: vulcand | Start service
   service:

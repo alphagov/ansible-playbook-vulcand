@@ -1,2 +1,5 @@
 ---
 # handlers file for vulcand
+
+- name: vulcand | Restart service
+  service: name=vulcand state=restarted
